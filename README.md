@@ -24,7 +24,7 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
 ### Usage
  - Install the package version through pip `pip install panoptes-he `
  - Requirements are listed in `requirements.txt`
- - import panoptes.execute.panoptes
+ - `from panoptes.execute import panoptes`
  - mode(required): select a mode to use (train, validate, test)
  - outdir(required): name of the output directory
  - feature(required): select a feature to predict (histology, subtype, POLE, MSI, CNV.L, CNV.H, ARID1A, ATM, BRCA2, 
@@ -44,3 +44,4 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
  - split_file(optional): For train and validate mode, random split is default for data separation. 
  If you prefer a customized split, please provide a split file (example can be found in `sample_sep_file.csv`)
  
+Main repository and commandline, bash, GUI version can be found in: https://github.com/rhong3/Panoptes
