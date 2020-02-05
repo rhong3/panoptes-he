@@ -1,4 +1,4 @@
-# **Panoptes for cancer H&E image prediction and visualization**
+# **Panoptes for cancer H&E image prediction and visualization (PyPI version)**
 panoptes is a InceptionResnet-based multi-resolution CNN architecture for cancer H&E histopathological image features 
 prediction. It is initially created to predict visualize features of endometrial carcinoma (UCEC), hoping to automate
 and assist gynecologic pathologists making quicker and accurate decisions and diagnosis without sequencing analyses.
@@ -21,14 +21,9 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
  - Panoptes2 (InceptionResnetV2-based; P2/PC2) 
  - Panoptes3 (InceptionResnetV1-based; P3/PC3) 
  - Panoptes2 (InceptionResnetV2-based; P4/PC4)
-### User Interface
-A simple user interface is included. If GUI is available, pop-up prompts will ask for inputs. Otherwise, read a prepared 
-bash file (see example: `Scripts/sample_bash_script.sh`). If bash file not available or inputs are invalid, 
-interactive command line prompts will ask for inputs.  
-Alternatively, a python package `panoptes-he` is available under PyPI.
 ### Usage
  - Create folders `Results`, `images`, `tiles` under the main folder `Panoptes` if they are not there. 
- - Please download this repository or install the package version through pip `pip install panoptes-he `
+ - Install the package version through pip `pip install panoptes-he `
  - Requirements are listed in `requirements.txt`
  - Scanned H&E slide files should be put in `images` folder under `Panoptes` folder
  - For train and validate mode, label file must also be provided. Example can be found in `sample_lable.csv`

@@ -20,11 +20,10 @@ import panoptes.sample_prep as sample_prep
 matplotlib.use('Agg')
 
 
-if __name__ == "__main__":
+def panoptes(mode, outdir, feature, architecture, log_dir, tile_dir=None, image_dir=None, modeltoload=None,
+             imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=None, age=None, label_file=None,
+             split_file=None):
     tf.reset_default_graph()
-    # getting input variables
-    mode, outdir, feature, architecture, modeltoload, imagefile, batchsize, epoch, resolution, \
-    BMI, age, label_file, split_file = prep.input_handler()
     if BMI is not None:
         BMI = float(BMI)
     else:
@@ -36,14 +35,7 @@ if __name__ == "__main__":
     batchsize = int(batchsize)
     epoch = int(epoch)
     if resolution is not None:
-        if resolution != "NA":
-            resolution = int(resolution)
-        else:
-            resolution = None
-    if label_file is None or label_file == "NA":
-        label_file = '../sample_label.csv'
-    if split_file == "NA":
-        split_file = None
+        resolution = int(resolution)
 
     print("All set! Your inputs are: ")
     print(["mode: {}".format(mode), "output: {}".format(outdir), "feature: {}".format(feature),
@@ -74,18 +66,17 @@ if __name__ == "__main__":
         "sup": sup
     }
 
-    img_dir = '../tiles/'
-    LOG_DIR = "../Results/{}".format(outdir)
-    out_dir = "../Results/{}/out".format(outdir)
+    LOG_DIR = "{}/{}".format(log_dir, outdir)
+    out_dir = "{}/out".format(LOG_DIR)
 
     if mode == "test":
         start_time = time.time()
         modelname = modeltoload.split(sep='/')[-1]
         modelpath = '/'.join(modeltoload.split(sep='/')[:-1])
-        data_dir = "../Results/{}".format(outdir)
+        data_dir = LOG_DIR
         METAGRAPH_DIR = modelpath
         # make directories if not exist
-        for DIR in (img_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (tile_dir, image_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
@@ -111,7 +102,7 @@ if __name__ == "__main__":
             else:
                 level = 0
                 ft = 2
-        slide = OpenSlide("../images/" + imagefile)
+        slide = OpenSlide(image_dir + '/' + imagefile)
 
         # Get dimension of slide
         bounds_width = slide.level_dimensions[level][0]
@@ -132,7 +123,7 @@ if __name__ == "__main__":
 
         # cut tiles
         if not os.path.isfile(data_dir + '/level1/dict.csv'):
-            prep.cutter(imagefile, LOG_DIR, resolution=resolution)
+            prep.cutter(imagefile, LOG_DIR, imgdir=image_dir, resolution=resolution)
         # make tfrecords
         if not os.path.isfile(data_dir + '/test.tfrecords'):
             prep.testloader(data_dir, imagefile, resolution, BMI, age)
@@ -143,7 +134,7 @@ if __name__ == "__main__":
         # decode tfrecords
         HE = prep.tfreloader(mode, 1, batchsize, classes, None, None, None, data_dir)
         # prediction
-        m.inference(HE, outdir, realtest=True, bs=batchsize, pmd=feature)
+        m.inference(HE, out_dir, realtest=True, bs=batchsize, pmd=feature)
         # load tiles dictionary
         slist = pd.read_csv(data_dir + '/te_sample.csv', header=0)
         # load dictionary of predictions on tiles
@@ -219,20 +210,20 @@ if __name__ == "__main__":
 
     elif mode == "validate":
         modelname = modeltoload.split(sep='/')[-1]
-        data_dir = "../Results/{}/data".format(outdir)
-        METAGRAPH_DIR = "../Results/{}".format(outdir)
+        data_dir = "{}/data".format(LOG_DIR)
+        METAGRAPH_DIR = LOG_DIR
         # make directories if not exist
-        for DIR in (img_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (image_dir, tile_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
                 pass
         # check images to be cut
         reff = pd.read_csv(label_file, header=0)
-        tocut = prep.check_new_image(reff, img_dir)
+        tocut = prep.check_new_image(reff, tile_dir)
         # cut into tiles
         for im in tocut:
-            prep.cutter(im[1], img_dir + '/' + im[0], dp=im[2], resolution=resolution)
+            prep.cutter(im[1], tile_dir + '/' + im[0], image_dir, dp=im[2], resolution=resolution)
 
         # get counts of testing, validation, and training datasets;
         # if not exist, prepare testing and training datasets from sampling; package into tfrecords
@@ -243,7 +234,7 @@ if __name__ == "__main__":
             tes = pd.read_csv(data_dir + '/te_sample.csv', header=0)
             vas = pd.read_csv(data_dir + '/va_sample.csv', header=0)
         else:
-            alll = sample_prep.big_image_sum(pmd=feature, path=img_dir, ref_file=label_file)
+            alll = sample_prep.big_image_sum(pmd=feature, path=tile_dir, ref_file=label_file)
             trs, tes, vas = sample_prep.set_sep(alll, path=data_dir, cls=classes, cut=0.2,
                                                 resolution=resolution, sep_file=split_file, batchsize=batchsize)
             trc, tec, vac, weights = prep.counters(data_dir, classes)
@@ -260,25 +251,25 @@ if __name__ == "__main__":
         # validating
         if tec >= batchsize:
             THE = prep.tfreloader('test', 1, batchsize, classes, trc, tec, vac, data_dir)
-            m.inference(THE, outdir, testset=tes, pmd=feature)
+            m.inference(THE, out_dir, testset=tes, pmd=feature)
         else:
             print("Not enough testing images!")
 
     else:
-        data_dir = "../Results/{}/data".format(outdir)
-        METAGRAPH_DIR = "../Results/{}".format(outdir)
+        data_dir = "{}/data".format(LOG_DIR)
+        METAGRAPH_DIR = LOG_DIR
         # make directories if not exist
-        for DIR in (img_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (image_dir, tile_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
                 pass
         # determine images to be cut
         reff = pd.read_csv(label_file, header=0)
-        tocut = prep.check_new_image(reff, img_dir)
+        tocut = prep.check_new_image(reff, tile_dir)
         # cut images into tiles
         for im in tocut:
-            prep.cutter(im[1], img_dir + '/' + im[0], dp=im[2], resolution=resolution)
+            prep.cutter(im[1], tile_dir + '/' + im[0], image_dir, dp=im[2], resolution=resolution)
 
         # get counts of testing, validation, and training datasets;
         # if not exist, prepare testing and training datasets from sampling; package into tfrecords
@@ -289,7 +280,7 @@ if __name__ == "__main__":
             tes = pd.read_csv(data_dir + '/te_sample.csv', header=0)
             vas = pd.read_csv(data_dir + '/va_sample.csv', header=0)
         else:
-            alll = sample_prep.big_image_sum(pmd=feature, path=img_dir, ref_file=label_file)
+            alll = sample_prep.big_image_sum(pmd=feature, path=tile_dir, ref_file=label_file)
             trs, tes, vas = sample_prep.set_sep(alll, path=data_dir, cls=classes, cut=0.2,
                                                 resolution=resolution, sep_file=split_file, batchsize=batchsize)
             trc, tec, vac, weights = prep.counters(data_dir, classes)
@@ -312,11 +303,11 @@ if __name__ == "__main__":
             print("Not enough training/validation images!")
         else:
             # training
-            m.train(HE, VHE, trc, batchsize, pmd=feature, dirr=outdir, max_iter=itt, save=True, outdir=METAGRAPH_DIR)
+            m.train(HE, VHE, trc, batchsize, pmd=feature, dirr=out_dir, max_iter=itt, save=True, outdir=METAGRAPH_DIR)
         if tec >= batchsize:
             # internal testing
             THE = prep.tfreloader('test', 1, batchsize, classes, trc, tec, vac, data_dir)
-            m.inference(THE, outdir, testset=tes, pmd=feature)
+            m.inference(THE, out_dir, testset=tes, pmd=feature)
         else:
             print("Not enough testing images!")
 

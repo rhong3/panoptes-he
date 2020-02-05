@@ -165,7 +165,7 @@ class INCEPTION:
                 global_step, train_op, merged_summary)
 
     # inference using trained models
-    def inference(self, X, dirr, testset=None, pmd=None, train_status=False, realtest=False, cam=False, bs=None):
+    def inference(self, X, dirr, testset=None, pmd=None, train_status=False, realtest=False, bs=None):
         now = datetime.now().isoformat()[11:]
         print("------- Testing begin: {} -------\n".format(now))
         rd = 0
@@ -189,20 +189,6 @@ class INCEPTION:
                                          self.dm_in: None, self.is_train: train_status}
                         fetches = [self.pred, self.net, self.w]
                         pred, net, w = self.sesh.run(fetches, feed_dict)
-                        if cam:
-                            for i in range(3):
-                                neta = net[:, :, :, :int(np.shape(net)[3] / 3)]
-                                netb = net[:, :, :, int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3)]
-                                netc = net[:, :, :, 2 * int(np.shape(net)[3] / 3):]
-                                wa = w[:int(np.shape(net)[3] / 3), :]
-                                wb = w[int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3), :]
-                                if self.sup:
-                                    wc = w[2 * int(np.shape(net)[3] / 3):int(np.shape(w)[0]) - 2, :]
-                                else:
-                                    wc = w[2 * int(np.shape(net)[3] / 3):, :]
-                                ac.CAM_R(neta, wa, pred, xa, dirr, 'Test_level0', bs, rd)
-                                ac.CAM_R(netb, wb, pred, xb, dirr, 'Test_level1', bs, rd)
-                                ac.CAM_R(netc, wc, pred, xc, dirr, 'Test_level2', bs, rd)
                         if rd == 0:
                             pdx = pred
                         else:
@@ -228,20 +214,6 @@ class INCEPTION:
                                          self.dm_in: None, self.is_train: train_status}
                         fetches = [self.pred, self.net, self.w]
                         pred, net, w = self.sesh.run(fetches, feed_dict)
-                        if cam:
-                            for i in range(3):
-                                neta = net[:, :, :, :int(np.shape(net)[3] / 3)]
-                                netb = net[:, :, :, int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3)]
-                                netc = net[:, :, :, 2 * int(np.shape(net)[3] / 3):]
-                                wa = w[:int(np.shape(net)[3] / 3), :]
-                                wb = w[int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3), :]
-                                if self.sup:
-                                    wc = w[2 * int(np.shape(net)[3] / 3):int(np.shape(w)[0]) - 2, :]
-                                else:
-                                    wc = w[2 * int(np.shape(net)[3] / 3):, :]
-                                    ac.CAM(neta, wa, pred, xa, y, dirr, 'Test_level0', bs, pmd, rd)
-                                    ac.CAM(netb, wb, pred, xb, y, dirr, 'Test_level1', bs, pmd, rd)
-                                    ac.CAM(netc, wc, pred, xc, y, dirr, 'Test_level2', bs, pmd, rd)
                         net = np.mean(net, axis=(1, 2))
                         if rd == 0:
                             pdx = pred
@@ -254,7 +226,6 @@ class INCEPTION:
                         rd += 1
                     except tf.errors.OutOfRangeError:
                         ac.metrics(pdx, yl, dirr, 'Test', pmd, testset)
-                        ac.tSNE_prep(flatnet=netl, ori_test=testset, y=yl, pred=pdx, path=dirr, pmd=pmd)
                         break
 
         now = datetime.now().isoformat()[11:]
@@ -450,20 +421,6 @@ class INCEPTION:
 
                         self.valid_logger.add_summary(valid_summary, i)
                         print("round {} --> Final Last validation loss: ".format(i), valid_cost)
-                        if cam:
-                            for i in range(3):
-                                neta = net[:, :, :, :int(np.shape(net)[3] / 3)]
-                                netb = net[:, :, :, int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3)]
-                                netc = net[:, :, :, 2 * int(np.shape(net)[3] / 3):]
-                                wa = w[:int(np.shape(net)[3] / 3), :]
-                                wb = w[int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3), :]
-                                if self.sup:
-                                    wc = w[2 * int(np.shape(net)[3] / 3):int(np.shape(w)[0]) - 2, :]
-                                else:
-                                    wc = w[2 * int(np.shape(net)[3] / 3):, :]
-                                ac.CAM(neta, wa, pred, xa, y, dirr, 'Validation_level0', bs, pmd)
-                                ac.CAM(netb, wb, pred, xb, y, dirr, 'Validation_level1', bs, pmd)
-                                ac.CAM(netc, wc, pred, xc, y, dirr, 'Validation_level2', bs, pmd)
                         ac.metrics(pred, y, dirr, 'Validation', pmd)
                         now = datetime.now().isoformat()[11:]
                         print("------- Final Validation end: {} -------\n".format(now), flush=True)
@@ -507,21 +464,6 @@ class INCEPTION:
 
                     self.valid_logger.add_summary(valid_summary, i)
                     print("round {} --> Last validation loss: ".format(i), valid_cost)
-                    if cam:
-                        for i in range(3):
-                            neta = net[:, :, :, :int(np.shape(net)[3] / 3)]
-                            netb = net[:, :, :, int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3)]
-                            netc = net[:, :, :, 2 * int(np.shape(net)[3] / 3):]
-                            wa = w[:int(np.shape(net)[3] / 3), :]
-                            wb = w[int(np.shape(net)[3] / 3):2 * int(np.shape(net)[3] / 3), :]
-                            if self.sup:
-                                wc = w[2 * int(np.shape(net)[3] / 3):int(np.shape(w)[0])-2, :]
-                            else:
-                                wc = w[2 * int(np.shape(net)[3] / 3):, :]
-
-                            ac.CAM(neta, wa, pred, xa, y, dirr, 'Validation_level0', bs, pmd)
-                            ac.CAM(netb, wb, pred, xb, y, dirr, 'Validation_level1', bs, pmd)
-                            ac.CAM(netc, wc, pred, xc, y, dirr, 'Validation_level2', bs, pmd)
                     ac.metrics(pred, y, dirr, 'Validation', pmd)
                     now = datetime.now().isoformat()[11:]
                     print("------- Validation end: {} -------\n".format(now), flush=True)

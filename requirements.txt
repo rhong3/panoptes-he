@@ -6,7 +6,6 @@ cycler==0.10.0
 cytoolz==0.10.1
 dask==2.9.2
 decorator==4.4.1
-easygui==0.98.1
 gast==0.3.3
 grpcio==1.23.0
 h5py==2.8.0

@@ -105,7 +105,7 @@ def paired_tile_ids_in(slide, root_dir, label=None, age=None, BMI=None, resoluti
 
 
 # Prepare label at per patient level according to label file
-def big_image_sum(pmd, path='../tiles/', ref_file='../sample_label.csv'):
+def big_image_sum(pmd, path, ref_file):
     ref = pd.read_csv(ref_file, header=0)
     big_images = []
     if pmd == 'subtype':

@@ -70,9 +70,9 @@ def v_slide(slp, n_y, x, y, tile_size, stepsize, x0, outdir, level, dp, std):
 # First open the slide, determine how many tiles can be cut, record the residue edges width,
 # and calculate the final output prediction heat map size should be. Then, using multithread to cut tiles, and stack up
 # tiles and their position dictionaries.
-def tile(image_file, outdir, level, std_img, path_to_slide="../images/", dp=None, ft=1):
-    slide = OpenSlide(path_to_slide+image_file)
-    slp = str(path_to_slide+image_file)
+def tile(image_file, outdir, level, std_img, path_to_slide, dp=None, ft=1):
+    slide = OpenSlide(path_to_slide + '/' + image_file)
+    slp = str(path_to_slide + '/' + image_file)
     print(slp)
     print(slide.level_dimensions)
 
