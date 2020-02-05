@@ -8,9 +8,9 @@ It can also be applied to other cancer types.
 Currently, it includes training/validating/testing of following features of endometrial cancer:
  - 18 mutations (ARID1A, ATM, BRCA2, CTCF, CTNNB1, FAT1, FBXW7, FGFR2, JAK1, KRAS, MTOR, 
  PIK3CA, PIK3R1, PPP2R1A, PTEN, RPL22, TP53, ZFHX3)
- - 4 molecular subtypes (CNV.H, CNV.L, MSI, POLE); please type "subtype" in bash script. if you want to predict only 1
- subtype (eg. CNV.H), then type "CNV.H". 
- - Histological subtypes (Endometrioid, Serous); please type "histology" in bash script
+ - 4 molecular subtypes (CNV.H, CNV.L, MSI, POLE). if you want to predict only 1 subtype (eg. CNV.H), 
+ then type "CNV.H". 
+ - Histological subtypes (Endometrioid, Serous)
 ### Modes
  - train: training a new model from scratch. 
  - validate: load a trained model and validate it on a set of prepared samples.
@@ -22,16 +22,25 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
  - Panoptes3 (InceptionResnetV1-based; P3/PC3) 
  - Panoptes2 (InceptionResnetV2-based; P4/PC4)
 ### Usage
- - Create folders `Results`, `images`, `tiles` under the main folder `Panoptes` if they are not there. 
  - Install the package version through pip `pip install panoptes-he `
  - Requirements are listed in `requirements.txt`
- - Scanned H&E slide files should be put in `images` folder under `Panoptes` folder
- - For train and validate mode, label file must also be provided. Example can be found in `sample_lable.csv`
- - For train and validate mode, random split is default for data separation. If you prefer a customized split, please
- provide a split file (example can be found in `sample_sep_file.csv`)
- - Output will be in a folder with name of your choice under `Results` folder.
- - In validate and test, to load pre-trained model, please enter the full path to it. 
- - In test, please enter the full path to the image to test. 
- - For bash input, please refer to example at `Scripts/sample_bash_script.sh`
- - If downloaded from this repository, double click the Panoptes.app to run (for Mac with GUI only). Or you can run 
- `python Main.py` in the main folder. 
+ - import panoptes.execute.panoptes
+ - mode(required): select a mode to use (train, validate, test)
+ - outdir(required): name of the output directory
+ - feature(required): select a feature to predict (histology, subtype, POLE, MSI, CNV.L, CNV.H, ARID1A, ATM, BRCA2, 
+ CTCF, CTNNB1, FAT1, FBXW7, FGFR2, JAK1, KRAS, MTOR, PIK3CA, PIK3R1, PPP2R1A, PTEN, RPL22, TP53, ZFHX3)
+ - architecture(required): select a architecture to use (P1, P2, P3, P4, PC1, PC2, PC3, PC4)
+ - log_dir(required): directory for log file, which will also contain the outdir.
+ - image_dir(required): directory contains the svs/scn scanned H&E slides
+ - tile_dir(required for train and validate): directory contains tiles of svs/scn scanned H&E slides
+ - modeltoload(required for validate and test): full path to trained model to load
+ - imagefile(required for test): the svs/scn scanned H&E slide to be tested in image_dir
+ - batchsize(optional, default=24): batch size
+ - epoch(optional, default=100000): max epoch; early stop is enabled.
+ - resolution(optional): resolution of scanned H&E slides. If known, enter 20 or 40. Otherwise, leave blank. 
+ - BMI(optional): patient BMI for test with PC models.
+ - age(optional): patient age for test with PC models.
+ - label_file(required for train and validate): label dictionary. Example can be found in `sample_lable.csv`. 
+ - split_file(optional): For train and validate mode, random split is default for data separation. 
+ If you prefer a customized split, please provide a split file (example can be found in `sample_sep_file.csv`)
+ 

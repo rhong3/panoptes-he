@@ -59,7 +59,7 @@ def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=N
         data_dir = LOG_DIR
         METAGRAPH_DIR = modelpath
         # make directories if not exist
-        for DIR in (image_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (log_dir, image_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
@@ -196,7 +196,7 @@ def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=N
         data_dir = "{}/data".format(LOG_DIR)
         METAGRAPH_DIR = LOG_DIR
         # make directories if not exist
-        for DIR in (image_dir, tile_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (log_dir, image_dir, tile_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
@@ -242,7 +242,7 @@ def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=N
         data_dir = "{}/data".format(LOG_DIR)
         METAGRAPH_DIR = LOG_DIR
         # make directories if not exist
-        for DIR in (image_dir, tile_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (log_dir, image_dir, tile_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
