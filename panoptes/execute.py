@@ -20,30 +20,13 @@ import panoptes.sample_prep as sample_prep
 matplotlib.use('Agg')
 
 
-def panoptes(mode, outdir, feature, architecture, log_dir, tile_dir=None, image_dir=None, modeltoload=None,
-             imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=None, age=None, label_file=None,
+def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=None, modeltoload=None,
+             imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=np.nan, age=np.nan, label_file=None,
              split_file=None):
-    tf.reset_default_graph()
-    if BMI is not None:
-        BMI = float(BMI)
-    else:
-        BMI =np.nan
-    if age is not None:
-        age = float(age)
-    else:
-        age =np.nan
-    batchsize = int(batchsize)
-    epoch = int(epoch)
-    if resolution is not None:
-        resolution = int(resolution)
+    prep.valid_input(mode, outdir, feature, architecture, log_dir, tile_dir, image_dir, modeltoload, imagefile,
+                     batchsize, epoch, resolution, BMI, age, label_file, split_file)
 
-    print("All set! Your inputs are: ")
-    print(["mode: {}".format(mode), "output: {}".format(outdir), "feature: {}".format(feature),
-           "architecture: {}".format(architecture), "pretrained model: {}".format(modeltoload),
-           "slide to predirct: {}".format(imagefile), "batch size: {}".format(batchsize),
-           "maximum epoch: {}".format(epoch), "slide max resolution: {}".format(resolution),
-           "patient BMI: {}".format(BMI), "patient age: {}".format(age), "label file: {}".format(label_file),
-           "sample split file: {}".format(split_file)], flush=True)
+    tf.reset_default_graph()
 
     if architecture in ["PC1", "PC2", "PC3", "PC4"]:
         sup = True
@@ -76,7 +59,7 @@ def panoptes(mode, outdir, feature, architecture, log_dir, tile_dir=None, image_
         data_dir = LOG_DIR
         METAGRAPH_DIR = modelpath
         # make directories if not exist
-        for DIR in (tile_dir, image_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
+        for DIR in (image_dir, LOG_DIR, METAGRAPH_DIR, data_dir, out_dir):
             try:
                 os.mkdir(DIR)
             except FileExistsError:
