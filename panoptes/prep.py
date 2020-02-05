@@ -14,9 +14,9 @@ import numpy as np
 import argparse
 import easygui
 import staintools
-import data_input
-import Slicer
-import sample_prep
+import panoptes.data_input as data_input
+import panoptes.Slicer as Slicer
+import panoptes.sample_prep as sample_prep
 
 
 # get inputs; if GUI available, use GUI; otherwise, switch to interactive command line automatically;

@@ -11,7 +11,7 @@ import sys
 import time
 import numpy as np
 import tensorflow as tf
-import accessory as ac
+import panoptes.accessory as ac
 
 
 # Define an Inception

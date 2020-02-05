@@ -14,9 +14,9 @@ import numpy as np
 import cv2
 import time
 import matplotlib
-import prep
-import cnn
-import sample_prep
+import panoptes.prep as prep
+import panoptes.cnn as cnn
+import panoptes.sample_prep as sample_prep
 matplotlib.use('Agg')
 
 
