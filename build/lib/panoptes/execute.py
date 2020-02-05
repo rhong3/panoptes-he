@@ -1,7 +1,7 @@
 """
-panoptes executable
+Main method
 
-Created on 02/05/2020
+Created on 01/21/2020
 
 @author: RH
 """
