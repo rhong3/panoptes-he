@@ -239,8 +239,9 @@ def cutter(img, outdirr, imgdir, dp=None, resolution=None):
         os.mkdir(outdirr)
     except(FileExistsError):
         pass
+    import panoptes
     # load standard image for normalization
-    std = staintools.read_image("colorstandard.png")
+    std = staintools.read_image("{}/colorstandard.png".format(panoptes.__path__))
     std = staintools.LuminosityStandardizer.standardize(std)
     if resolution == 20:
         for m in range(1, 4):
