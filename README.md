@@ -40,8 +40,8 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
  - resolution(optional): resolution of scanned H&E slides. If known, enter 20 or 40. Otherwise, leave blank. 
  - BMI(optional): patient BMI for test with PC models.
  - age(optional): patient age for test with PC models.
- - label_file(required for train and validate): label dictionary. Example can be found in `sample_lable.csv`. 
+ - label_file(required for train and validate): label dictionary. Example can be used `sample_lable.csv`. 
  - split_file(optional): For train and validate mode, random split is default for data separation. 
- If you prefer a customized split, please provide a split file (example can be found in `sample_sep_file.csv`)
+ If you prefer a customized split, please provide a split file (example can be used `sample_sep_file.csv`)
  
 Main repository and commandline, bash, GUI version can be found in: https://github.com/rhong3/Panoptes

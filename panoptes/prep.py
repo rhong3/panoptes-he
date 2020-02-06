@@ -240,7 +240,7 @@ def cutter(img, outdirr, imgdir, dp=None, resolution=None):
     except(FileExistsError):
         pass
     # load standard image for normalization
-    std = staintools.read_image("../colorstandard.png")
+    std = staintools.read_image("colorstandard.png")
     std = staintools.LuminosityStandardizer.standardize(std)
     if resolution == 20:
         for m in range(1, 4):

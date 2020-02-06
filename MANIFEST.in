@@ -1,0 +1,4 @@
+include panoptes/colorstandard.png
+include panoptes/sample_label.csv
+include panoptes/sample_sep_file.csv
+include panoptes/requirements.txt

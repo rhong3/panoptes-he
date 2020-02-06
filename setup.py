@@ -9,7 +9,7 @@ requirements = ["easygui>=0.98", "Keras>=2.3", "numpy>=1.17.5", "opencv-python>=
 
 setup(
     name="panoptes-he",
-    version="0.1.0",
+    version="0.1.2",
     author="Runyu Hong",
     author_email="Runyu.Hong@nyu.edu",
     description="A multi-resolution CNN to predict endometrial cancer features",
@@ -17,6 +17,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/rhong3/panoptes-he/",
     packages=find_packages(),
+    include_package_data=True,
     install_requires=requirements,
     classifiers=[
         "Programming Language :: Python :: 3.6",

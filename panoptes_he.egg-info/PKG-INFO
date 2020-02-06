@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: panoptes-he
-Version: 0.1.0
+Version: 0.1.2
 Summary: A multi-resolution CNN to predict endometrial cancer features
 Home-page: https://github.com/rhong3/panoptes-he/
 Author: Runyu Hong
@@ -48,9 +48,9 @@ Description: # **Panoptes for cancer H&E image prediction and visualization (PyP
          - resolution(optional): resolution of scanned H&E slides. If known, enter 20 or 40. Otherwise, leave blank. 
          - BMI(optional): patient BMI for test with PC models.
          - age(optional): patient age for test with PC models.
-         - label_file(required for train and validate): label dictionary. Example can be found in `sample_lable.csv`. 
+         - label_file(required for train and validate): label dictionary. Example can be used `sample_lable.csv`. 
          - split_file(optional): For train and validate mode, random split is default for data separation. 
-         If you prefer a customized split, please provide a split file (example can be found in `sample_sep_file.csv`)
+         If you prefer a customized split, please provide a split file (example can be used `sample_sep_file.csv`)
          
         Main repository and commandline, bash, GUI version can be found in: https://github.com/rhong3/Panoptes
 Platform: UNKNOWN
