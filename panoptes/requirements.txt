@@ -28,7 +28,7 @@ pandas==0.25.3
 Pillow==7.0.0
 protobuf==3.11.2
 pygpu==0.7.6
-python-spams==2.6.1
+python-spams==2.6.1 or spams==2.6.1
 pyparsing==2.4.6
 python-dateutil==2.8.1
 pytz==2019.3
