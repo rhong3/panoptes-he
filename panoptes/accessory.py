@@ -35,11 +35,11 @@ def ROC_PRC(outtl, pdx, path, name, fdict, dm, accur, pmd):
         microy = []
         microscore = []
         for i in range(rdd):
-            fpr[i], tpr[i], _ = sklearn.metrics.roc_curve(np.asarray((outtl.iloc[:, 0].values == int(i)).astype('uint8')),
-                                                      np.asarray(pdx[:, i]).ravel())
+            fpr[i], tpr[i], _ = sklearn.metrics.roc_curve(
+                np.asarray((outtl.iloc[:, 0].values == int(i)).astype('uint8')), np.asarray(pdx[:, i]).ravel())
             try:
-                roc_auc[i] = sklearn.metrics.roc_auc_score(np.asarray((outtl.iloc[:, 0].values == int(i)).astype('uint8')),
-                                                       np.asarray(pdx[:, i]).ravel())
+                roc_auc[i] = sklearn.metrics.roc_auc_score(
+                    np.asarray((outtl.iloc[:, 0].values == int(i)).astype('uint8')), np.asarray(pdx[:, i]).ravel())
             except ValueError:
                 roc_auc[i] = np.nan
 
@@ -51,8 +51,8 @@ def ROC_PRC(outtl, pdx, path, name, fdict, dm, accur, pmd):
                                                    np.asarray(pdx[:, i]).ravel())
             try:
                 average_precision[i] = \
-                    sklearn.metrics.average_precision_score(np.asarray((outtl.iloc[:, 0].values == int(i)).astype('uint8')),
-                                                        np.asarray(pdx[:, i]).ravel())
+                    sklearn.metrics.average_precision_score(
+                        np.asarray((outtl.iloc[:, 0].values == int(i)).astype('uint8')), np.asarray(pdx[:, i]).ravel())
             except ValueError:
                 average_precision[i] = np.nan
 
