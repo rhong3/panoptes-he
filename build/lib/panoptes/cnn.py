@@ -94,40 +94,40 @@ class INCEPTION:
 
         # determine architecture to use
         if model == 'P1' or model == 'PC1':
-            import panoptes.Panoptes1
-            logits, nett, ww = Panoptes1.Panoptes1(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
+            from panoptes.Panoptes1 import Panoptes1
+            logits, nett, ww = Panoptes1(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
                                                    num_cls=classes,
                                                    is_train=is_train,
                                                    dropout=dropout,
                                                    scope='P1', supermd=sup)
             print('Using Panoptes1')
         elif model == 'P2' or model == 'PC2':
-            import panoptes.Panoptes2
-            logits, nett, ww = Panoptes2.Panoptes2(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
+            from panoptes.Panoptes2 import Panoptes2
+            logits, nett, ww = Panoptes2(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
                                                    num_cls=classes,
                                                    is_train=is_train,
                                                    dropout=dropout,
                                                    scope='P2', supermd=sup)
             print('Using Panoptes2')
         elif model == 'P3' or model == 'PC3':
-            import panoptes.Panoptes3
-            logits, nett, ww = Panoptes3.Panoptes3(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
+            from panoptes.Panoptes3 import Panoptes3
+            logits, nett, ww = Panoptes3(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
                                                    num_cls=classes,
                                                    is_train=is_train,
                                                    dropout=dropout,
                                                    scope='P3', supermd=sup)
             print('Using Panoptes3')
         elif model == 'P4' or model == 'PC4':
-            import panoptes.Panoptes4
-            logits, nett, ww = Panoptes4.Panoptes4(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
+            from panoptes.Panoptes4 import Panoptes4
+            logits, nett, ww = Panoptes4(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
                                                    num_cls=classes,
                                                    is_train=is_train,
                                                    dropout=dropout,
                                                    scope='P4', supermd=sup)
             print('Using X4')
         else:
-            import panoptes.Panoptes1
-            logits, nett, ww = Panoptes1.Panoptes1(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
+            from panoptes.Panoptes1 import Panoptes1
+            logits, nett, ww = Panoptes1(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
                                                    num_cls=classes,
                                                    is_train=is_train,
                                                    dropout=dropout,
