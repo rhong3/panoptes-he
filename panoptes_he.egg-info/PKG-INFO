@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: panoptes-he
-Version: 0.1.9
+Version: 0.1.10
 Summary: A multi-resolution CNN to predict endometrial cancer features
 Home-page: https://github.com/rhong3/panoptes-he/
 Author: Runyu Hong
@@ -41,7 +41,7 @@ Description: # **Panoptes for cancer H&E image prediction and visualization (PyP
          - log_dir(required): directory for log file, which will also contain the outdir.
          - image_dir(required): directory contains the svs/scn scanned H&E slides
          - tile_dir(required for train and validate): directory contains tiles of svs/scn scanned H&E slides
-         - modeltoload(required for validate and test): full path to trained model to load
+         - modeltoload(required for validate and test): full path to trained model to load (without .meta)
          - imagefile(required for test): the svs/scn scanned H&E slide to be tested in image_dir
          - batchsize(optional, default=24): batch size
          - epoch(optional, default=100000): max epoch; early stop is enabled.

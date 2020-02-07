@@ -33,7 +33,7 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
  - log_dir(required): directory for log file, which will also contain the outdir.
  - image_dir(required): directory contains the svs/scn scanned H&E slides
  - tile_dir(required for train and validate): directory contains tiles of svs/scn scanned H&E slides
- - modeltoload(required for validate and test): full path to trained model to load
+ - modeltoload(required for validate and test): full path to trained model to load (without .meta)
  - imagefile(required for test): the svs/scn scanned H&E slide to be tested in image_dir
  - batchsize(optional, default=24): batch size
  - epoch(optional, default=100000): max epoch; early stop is enabled.
