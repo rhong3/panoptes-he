@@ -69,7 +69,7 @@ def valid_input(mode, outdir, feature, architecture, log_dir, tile_dir, image_di
         if modeltoload is None:
             print("Missing model to load!")
             exit(0)
-        elif not os.path.isfile(modeltoload):
+        elif not os.path.isfile(modeltoload+".meta"):
             print("Invalid model to load!")
             exit(0)
     if resolution is not None and resolution not in [20, 40]:
