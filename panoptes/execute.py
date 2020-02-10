@@ -20,6 +20,13 @@ import panoptes.sample_prep as sample_prep
 matplotlib.use('Agg')
 
 
+def get_default_data():
+    import panoptes
+    label = pd.read_csv("{}/sample_label.csv".format(panoptes.__path__[0]), header=0)
+    split = pd.read_csv("{}/sample_sep_file.csv".format(panoptes.__path__[0]), header=0)
+    return label, split
+
+
 def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=None, modeltoload=None,
              imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=np.nan, age=np.nan, label_file=None,
              split_file=None):

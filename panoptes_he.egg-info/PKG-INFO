@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: panoptes-he
-Version: 0.1.10
+Version: 0.1.11
 Summary: A multi-resolution CNN to predict endometrial cancer features
 Home-page: https://github.com/rhong3/panoptes-he/
 Author: Runyu Hong
@@ -32,7 +32,12 @@ Description: # **Panoptes for cancer H&E image prediction and visualization (PyP
         ### Usage
          - Install the package version through pip `pip install panoptes-he `
          - Requirements are listed in `requirements.txt`
-         - `from panoptes.execute import panoptes`
+         - `from panoptes.execute import panoptes, get_default_data`
+         - Get default label_file and split_file: `label_file, split_file = get_default_data()`
+        ### Parameters 
+        `panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=None, modeltoload=None,
+                     imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=np.nan, age=np.nan, label_file=None,
+                     split_file=None)`
          - mode(required): select a mode to use (train, validate, test)
          - outdir(required): name of the output directory
          - feature(required): select a feature to predict (histology, subtype, POLE, MSI, CNV.L, CNV.H, ARID1A, ATM, BRCA2, 
