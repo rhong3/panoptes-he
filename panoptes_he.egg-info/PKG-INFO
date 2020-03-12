@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: panoptes-he
-Version: 0.1.12
+Version: 0.1.13
 Summary: A multi-resolution CNN to predict endometrial cancer features
 Home-page: https://github.com/rhong3/panoptes-he/
 Author: Runyu Hong
