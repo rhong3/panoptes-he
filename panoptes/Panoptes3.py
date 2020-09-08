@@ -36,7 +36,7 @@ def resnet_v1_stem(input, train=True):
     return x
 
 
-def inception_resnet_v1_A(input, scale_residual=True, train=True):
+def inception_resnet_v1_A(input, scale_residual=True):
     # Architecture of Inception_ResNet_A block which is a 35 * 35 grid module.
 
     ar1 = Conv2D(32, (1, 1), kernel_regularizer=l2(0.0002), activation="relu", padding="same")(input)
@@ -60,7 +60,7 @@ def inception_resnet_v1_A(input, scale_residual=True, train=True):
     return output
 
 
-def inception_resnet_v1_B(input, scale_residual=True, train=True):
+def inception_resnet_v1_B(input, scale_residual=True):
     # Architecture of Inception_ResNet_B block which is a 17 * 17 grid module.
 
     br1 = Conv2D(128, (1, 1), kernel_regularizer=l2(0.0002), activation="relu", padding="same")(input)
@@ -81,7 +81,7 @@ def inception_resnet_v1_B(input, scale_residual=True, train=True):
     return output
 
 
-def inception_resnet_v1_C(input, scale_residual=True, train=True):
+def inception_resnet_v1_C(input, scale_residual=True):
     # Architecture of Inception_ResNet_C block which is a 8 * 8 grid module.
 
     cr1 = Conv2D(192, (1, 1), kernel_regularizer=l2(0.0002), activation="relu", padding="same")(input)
@@ -102,7 +102,7 @@ def inception_resnet_v1_C(input, scale_residual=True, train=True):
     return output
 
 
-def reduction_resnet_A(input, k=192, l=224, m=256, n=384, train=True):
+def reduction_resnet_A(input, k=192, l=224, m=256, n=384):
     # Architecture of a 35 * 35 to 17 * 17 Reduction_ResNet_A block. It is used by both v1 and v2 Inception-ResNets.
 
     rar1 = MaxPooling2D((3, 3), strides=(2, 2))(input)
@@ -120,7 +120,7 @@ def reduction_resnet_A(input, k=192, l=224, m=256, n=384, train=True):
     return rar
 
 
-def reduction_resnet_v1_B(input, train=True):
+def reduction_resnet_v1_B(input):
     # Architecture of a 17 * 17 to 8 * 8 Reduction_ResNet_B block.
 
     rbr1 = MaxPooling2D((3, 3), strides=(2, 2), padding="valid")(input)
@@ -148,15 +148,15 @@ def Branch(input, dropout_keep_prob=0.8, num_classes=1000, is_training=True):
 
     # 5 x Inception A
     for i in range(5):
-        x = inception_resnet_v1_A(x, train=is_training)
+        x = inception_resnet_v1_A(x)
         # Output: 35 * 35 * 256
 
     # Reduction A
-    x = reduction_resnet_A(x, k=192, l=192, m=256, n=384, train=is_training)  # Output: 17 * 17 * 896
+    x = reduction_resnet_A(x, k=192, l=192, m=256, n=384)  # Output: 17 * 17 * 896
 
     # 10 x Inception B
     for i in range(10):
-        x = inception_resnet_v1_B(x, train=is_training)
+        x = inception_resnet_v1_B(x)
         # Output: 17 * 17 * 896
 
     # auxiliary

@@ -2,7 +2,7 @@
 panoptes is a InceptionResnet-based multi-resolution CNN architecture for cancer H&E histopathological image features 
 prediction. It is initially created to predict visualize features of endometrial carcinoma (UCEC), hoping to automate
 and assist gynecologic pathologists making quicker and accurate decisions and diagnosis without sequencing analyses.
-Details can be found in the paper: https://www.biorxiv.org/content/10.1101/2020.02.25.965038v2
+Details can be found in the paper: https://www.biorxiv.org/content/10.1101/2020.02.25.965038v3
 It can also be applied to other cancer types. 
 ### Features included 
 Currently, it includes training/validating/testing of following features of endometrial cancer:
@@ -29,7 +29,7 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
 ### Parameters 
 `panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=None, modeltoload=None,
              imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=np.nan, age=np.nan, label_file=None,
-             split_file=None)`
+             split_file=None, cancer='UCEC')`
  - mode(required): select a mode to use (train, validate, test)
  - outdir(required): name of the output directory
  - feature(required): select a feature to predict (histology, subtype, POLE, MSI, CNV.L, CNV.H, ARID1A, ATM, BRCA2, 
@@ -41,12 +41,13 @@ PC are architectures with the branch integrating BMI and age; P are original Pan
  - modeltoload(required for validate and test): full path to trained model to load (without .meta)
  - imagefile(required for test): the svs/scn scanned H&E slide to be tested in image_dir
  - batchsize(optional, default=24): batch size
- - epoch(optional, default=100000): max epoch; early stop is enabled.
+ - epoch(optional, default=100): max epoch; early stop is enabled.
  - resolution(optional): resolution of scanned H&E slides. If known, enter 20 or 40. Otherwise, leave blank. 
  - BMI(optional): patient BMI for test with PC models.
  - age(optional): patient age for test with PC models.
  - label_file(required for train and validate): label dictionary. Example can be used `sample_lable.csv`. 
  - split_file(optional): For train and validate mode, random split is default for data separation. 
+ - cancer(currently optional): Currently only UCEC is supported.
  If you prefer a customized split, please provide a split file (example can be used `sample_sep_file.csv`)
  
 Main repository and commandline, bash, GUI version can be found in: https://github.com/rhong3/Panoptes
