@@ -28,9 +28,9 @@ def get_default_data():
 
 
 def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=None, modeltoload=None,
-             imagefile=None, batchsize=24, epoch=100000, resolution=None, BMI=np.nan, age=np.nan, label_file=None,
-             split_file=None):
-    prep.valid_input(mode, outdir, feature, architecture, log_dir, tile_dir, image_dir, modeltoload, imagefile,
+             imagefile=None, batchsize=24, epoch=100, resolution=None, BMI=np.nan, age=np.nan, label_file=None,
+             split_file=None, cancer='UCEC'):
+    prep.valid_input(mode, cancer, outdir, feature, architecture, log_dir, tile_dir, image_dir, modeltoload, imagefile,
                      batchsize, epoch, resolution, BMI, age, label_file, split_file)
 
     tf.reset_default_graph()
@@ -56,7 +56,7 @@ def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=N
         "sup": sup
     }
 
-    LOG_DIR = "{}/{}".format(log_dir, outdir)
+    LOG_DIR = "{}/{}".format(outdir, log_dir)
     out_dir = "{}/out".format(LOG_DIR)
 
     if mode == "test":

@@ -16,7 +16,7 @@ import panoptes.Slicer as Slicer
 import panoptes.sample_prep as sample_prep
 
 
-def valid_input(mode, outdir, feature, architecture, log_dir, tile_dir, image_dir, modeltoload, imagefile,
+def valid_input(mode, cancer, outdir, feature, architecture, log_dir, tile_dir, image_dir, modeltoload, imagefile,
                      batchsize, epoch, resolution, BMI, age, label_file, split_file):
     if mode not in ['train', 'validate', 'test']:
         print("Invalid mode!")
@@ -24,11 +24,15 @@ def valid_input(mode, outdir, feature, architecture, log_dir, tile_dir, image_di
     if not isinstance(outdir, str) or not isinstance(log_dir, str):
         print("Invalid output or log directory!")
         exit(0)
-    if feature not in ["histology", "subtype", "POLE", "MSI", "CNV.L", "CNV.H", "ARID1A", "ATM", "BRCA2", "CTCF",
-                       "CTNNB1", "FAT1", "FBXW7", "FGFR2", "JAK1", "KRAS", "MTOR", "PIK3CA", "PIK3R1", "PPP2R1A",
-                       "PTEN", "RPL22", "TP53", "ZFHX3"]:
-        print("Invalid feature to predict!")
+    if cancer not in ['UCEC']:
+        print("Invalid cancer type to predict!")
         exit(0)
+    if cancer == 'UCEC':
+        if feature not in ["histology", "subtype", "POLE", "MSI", "CNV.L", "CNV.H", "ARID1A", "ATM", "BRCA2", "CTCF",
+                           "CTNNB1", "FAT1", "FBXW7", "FGFR2", "JAK1", "KRAS", "MTOR", "PIK3CA", "PIK3R1", "PPP2R1A",
+                           "PTEN", "RPL22", "TP53", "ZFHX3"]:
+            print("Invalid feature to predict!")
+            exit(0)
     if architecture not in ["P1", "P2", "P3", "P4", "PC1", "PC2", "PC3", "PC4"]:
         print("Invalid architecture!")
         exit(0)

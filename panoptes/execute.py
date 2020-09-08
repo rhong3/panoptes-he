@@ -56,7 +56,7 @@ def panoptes(mode, outdir, feature, architecture, log_dir, image_dir, tile_dir=N
         "sup": sup
     }
 
-    LOG_DIR = "{}/{}".format(log_dir, outdir)
+    LOG_DIR = "{}/{}".format(outdir, log_dir)
     out_dir = "{}/out".format(LOG_DIR)
 
     if mode == "test":
