@@ -124,7 +124,7 @@ class INCEPTION:
                                                    is_train=is_train,
                                                    dropout=dropout,
                                                    scope='P4', supermd=sup)
-            print('Using X4')
+            print('Using Panoptes4')
         else:
             from panoptes.Panoptes1 import Panoptes1
             logits, nett, ww = Panoptes1(xa_in_reshape, xb_in_reshape, xc_in_reshape, dm_in_reshape,
